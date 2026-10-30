@@ -13,7 +13,6 @@ import ProfilePage from "../pages/ProfilePage";
 // layout
 import MainLayout from "../components/layout/MainLayout";
 
-
 const AppRouter = () => {
   return (
     <BrowserRouter>
@@ -42,7 +41,6 @@ const AppRouter = () => {
 
         {/* Protected routes - redirect to login if not logged in */}
         <Route
-          path="/"
           element={
             <ProtectedRoute>
               <MainLayout /> {/* Navbar + Sidebar wrapper */}
