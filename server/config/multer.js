@@ -1,4 +1,4 @@
-import multer from "multer";
+import multer, { memoryStorage } from "multer"; // ← different import
 import { ApiError } from "../utils/apiError.js";
 
 const allowedTypes = [
@@ -7,27 +7,28 @@ const allowedTypes = [
   "image/gif",
   "application/pdf",
   "application/msword",
-  "application/vnd.openxmlformats-officedocument.wordprocessingml.document", // .docx
-  "application/vnd.ms-excel", // .xls
-  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", // .xlsx
+  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+  "application/vnd.ms-excel",
+  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
 ];
 
-const storage = multer.memoryStorage();
+const storage = memoryStorage(); // ← no multer. prefix
 
 const fileFilter = (req, file, cb) => {
   if (allowedTypes.includes(file.mimetype)) {
-    cb(null, true); // ✅ allow
+    cb(null, true);
   } else {
-    cb(new ApiError(400, "File type not allowed"), false); // ❌ reject
+    cb(new ApiError(400, "File type not allowed"), false);
   }
 };
 
 const fileSizeMB = Number(process.env.FILES_SIZE_CLOUD_MB) || 5;
 
-export const upload = multer({
+export const uploadMulter = new multer({
+  // ← new keyword
   storage,
   fileFilter,
   limits: {
-    fileSize: fileSizeMB * 1024 * 1024, // 5MB
+    fileSize: fileSizeMB * 1024 * 1024,
   },
 });

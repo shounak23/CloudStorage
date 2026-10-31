@@ -6,7 +6,6 @@ import {
 } from "../controllers/fileControllers.js";
 import { uploadMulter } from "../config/multer.js";
 
-
 const router = Router();
 
 router.get("/", getFiles);

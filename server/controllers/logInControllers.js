@@ -19,24 +19,32 @@ export const loginController = async (req, res, next) => {
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) throw new ApiError(401, "Invalid credentials");
 
-    // check user is already loggedIn from other device or not
-    const alreadyLoggedIn = await Session.findOne({
+    // check user is already loggedIn from same device or not
+    const anySession = await Session.findOne({
+      userId: user._id,
+      isValid: true,
+    });
+
+    // check user is already loggedIn from same device or not
+    const sameDeviceSession = await Session.findOne({
       userId: user._id,
       userAgent: req.headers["user-agent"], // ← same device check
       isValid: true,
     });
 
-    if (alreadyLoggedIn) {
+    if (anySession) {
       if (process.env.MULTIDEVICE_LOGIN != 1) {
-        // block completely
+        // single device mode → block any new login from any device
         throw new ApiError(403, "Already logged in from another device");
-      } else {
-        // same device logging in again → delete old session, create new one
-        await Session.deleteOne({
-          userId: user._id,
-          userAgent: req.headers["user-agent"],
-        });
       }
+    }
+
+    if (sameDeviceSession) {
+      // same device logging in again → delete old session, create new one
+      await Session.deleteOne({
+        userId: user._id,
+        userAgent: req.headers["user-agent"],
+      });
     }
 
     // generate access token
