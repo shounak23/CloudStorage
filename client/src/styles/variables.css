@@ -1,129 +1,68 @@
 :root {
-  /* Spacing */
-  --space-1: 4px;
-  --space-2: 8px;
-  --space-3: 12px;
-  --space-4: 16px;
-  --space-5: 20px;
-  --space-6: 24px;
-  --space-8: 32px;
-  --space-10: 40px;
-  --space-12: 48px;
-
-  /* Breakpoints (use in JS if needed) */
-  --bp-mobile: 768px;
-  --bp-desktop: 1024px;
-
-  /* Sidebar */
+  --border-radius: 8px;
   --sidebar-width: 240px;
   --navbar-height: 64px;
 }
-/* ─── DEFAULT LIGHT THEME ─── */
+
+/* ─── LIGHT THEME (default) ─── */
+:root,
 :root[data-theme="light"] {
-  /* Background */
   --bg-primary: #ffffff;
   --bg-secondary: #f5f7fa;
   --bg-sidebar: #1e293b;
   --bg-navbar: #ffffff;
 
-  /* Text */
   --text-primary: #1e293b;
   --text-secondary: #64748b;
   --text-inverse: #ffffff;
   --text-sidebar: #cbd5e1;
 
-  /* Brand */
-  --color-primary: #3b82f6;
-  --color-primary-hover: #2563eb;
-  --color-primary-light: #eff6ff;
+  --primary: #3b82f6;
+  --primary-hover: #2563eb;
 
-  /* Status */
-  --color-success: #22c55e;
-  --color-danger: #ef4444;
-  --color-warning: #f59e0b;
-  --color-info: #3b82f6;
+  --success: #22c55e;
+  --danger: #ef4444;
+  --danger-hover: #dc2626;
+  --warning: #f59e0b;
+  --info: #3b82f6;
 
-  /* Button variants */
-  --btn-primary-bg: #3b82f6;
-  --btn-primary-text: #ffffff;
-  --btn-primary-hover: #2563eb;
-
-  --btn-secondary-bg: #f1f5f9;
-  --btn-secondary-text: #1e293b;
-  --btn-secondary-hover: #e2e8f0;
-
-  --btn-danger-bg: #ef4444;
-  --btn-danger-text: #ffffff;
-  --btn-danger-hover: #dc2626;
-
-  --btn-ghost-bg: transparent;
-  --btn-ghost-text: #3b82f6;
-  --btn-ghost-hover: #eff6ff;
-
-  /* Border */
   --border-color: #e2e8f0;
-  --border-radius: 8px;
-
-  /* Shadow */
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
   --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
 
-  /* Sidebar specific */
   --sidebar-active-bg: #3b82f6;
   --sidebar-active-text: #ffffff;
   --sidebar-hover-bg: #334155;
 
-  /* Progress */
   --progress-bg: #e2e8f0;
   --progress-fill: #3b82f6;
 }
 
 /* ─── DARK THEME ─── */
 :root[data-theme="dark"] {
-  /* Background */
   --bg-primary: #0f172a;
   --bg-secondary: #1e293b;
   --bg-sidebar: #0f172a;
   --bg-navbar: #1e293b;
 
-  /* Text */
   --text-primary: #f1f5f9;
   --text-secondary: #94a3b8;
   --text-inverse: #0f172a;
   --text-sidebar: #cbd5e1;
 
-  /* Brand */
-  --color-primary: #60a5fa;
-  --color-primary-hover: #3b82f6;
-  --color-primary-light: #1e3a5f;
+  --primary: #60a5fa;
+  --primary-hover: #3b82f6;
 
-  /* Status */
+  --success: #22c55e;
+  --danger: #ef4444;
+  --danger-hover: #f87171;
+  --warning: #f59e0b;
+  --info: #60a5fa;
 
-  /* Button variants */
-  --btn-primary-bg: #3b82f6;
-  --btn-primary-text: #ffffff;
-  --btn-primary-hover: #60a5fa;
-
-  --btn-secondary-bg: #334155;
-  --btn-secondary-text: #f1f5f9;
-  --btn-secondary-hover: #475569;
-
-  --btn-danger-bg: #ef4444;
-  --btn-danger-text: #ffffff;
-  --btn-danger-hover: #f87171;
-
-  --btn-ghost-bg: transparent;
-  --btn-ghost-text: #60a5fa;
-  --btn-ghost-hover: #1e3a5f;
-
-  /* Border */
   --border-color: #334155;
-
-  /* Shadow */
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
   --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
 
-  /* Sidebar specific */
   --sidebar-active-bg: #3b82f6;
   --sidebar-active-text: #ffffff;
   --sidebar-hover-bg: #1e293b;
@@ -144,25 +83,14 @@
   --text-inverse: #ffffff;
   --text-sidebar: #ddd6fe;
 
-  --color-primary: #7c3aed;
-  --color-primary-hover: #6d28d9;
-  --color-primary-light: #f5f3ff;
+  --primary: #7c3aed;
+  --primary-hover: #6d28d9;
 
-  --btn-primary-bg: #7c3aed;
-  --btn-primary-text: #ffffff;
-  --btn-primary-hover: #6d28d9;
-
-  --btn-secondary-bg: #f5f3ff;
-  --btn-secondary-text: #1e1b4b;
-  --btn-secondary-hover: #ede9fe;
-
-  --btn-danger-bg: #ef4444;
-  --btn-danger-text: #ffffff;
-  --btn-danger-hover: #dc2626;
-
-  --btn-ghost-bg: transparent;
-  --btn-ghost-text: #7c3aed;
-  --btn-ghost-hover: #f5f3ff;
+  --success: #22c55e;
+  --danger: #ef4444;
+  --danger-hover: #dc2626;
+  --warning: #f59e0b;
+  --info: #7c3aed;
 
   --border-color: #e9d5ff;
   --shadow-sm: 0 1px 3px rgba(124, 58, 237, 0.1);
@@ -174,4 +102,39 @@
 
   --progress-bg: #ede9fe;
   --progress-fill: #7c3aed;
+}
+
+/* ─── Expose variables to Tailwind as classes ─── */
+@theme inline {
+  --color-app: var(--bg-secondary);
+  --color-surface: var(--bg-primary);
+  --color-navbar: var(--bg-navbar);
+  --color-sidebar: var(--bg-sidebar);
+  --color-sidebar-hover: var(--sidebar-hover-bg);
+  --color-sidebar-active: var(--sidebar-active-bg);
+
+  --color-main: var(--text-primary);
+  --color-muted: var(--text-secondary);
+  --color-inverse: var(--text-inverse);
+  --color-sidebar-text: var(--text-sidebar);
+
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-success: var(--success);
+  --color-danger: var(--danger);
+  --color-danger-hover: var(--danger-hover);
+  --color-warning: var(--warning);
+  --color-info: var(--info);
+
+  --color-line: var(--border-color);
+  --color-progress-bg: var(--progress-bg);
+  --color-progress-fill: var(--progress-fill);
+
+  --shadow-sm: var(--shadow-sm);
+  --shadow-md: var(--shadow-md);
+}
+
+body {
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
 }
