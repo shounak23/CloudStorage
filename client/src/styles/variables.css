@@ -1,0 +1,140 @@
+:root {
+  --border-radius: 8px;
+  --sidebar-width: 240px;
+  --navbar-height: 64px;
+}
+
+/* ─── LIGHT THEME (default) ─── */
+:root,
+:root[data-theme="light"] {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f5f7fa;
+  --bg-sidebar: #1e293b;
+  --bg-navbar: #ffffff;
+
+  --text-primary: #1e293b;
+  --text-secondary: #64748b;
+  --text-inverse: #ffffff;
+  --text-sidebar: #cbd5e1;
+
+  --primary: #3b82f6;
+  --primary-hover: #2563eb;
+
+  --success: #22c55e;
+  --danger: #ef4444;
+  --danger-hover: #dc2626;
+  --warning: #f59e0b;
+  --info: #3b82f6;
+
+  --border-color: #e2e8f0;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+  --sidebar-active-bg: #3b82f6;
+  --sidebar-active-text: #ffffff;
+  --sidebar-hover-bg: #334155;
+
+  --progress-bg: #e2e8f0;
+  --progress-fill: #3b82f6;
+}
+
+/* ─── DARK THEME ─── */
+:root[data-theme="dark"] {
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --bg-sidebar: #0f172a;
+  --bg-navbar: #1e293b;
+
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-inverse: #0f172a;
+  --text-sidebar: #cbd5e1;
+
+  --primary: #60a5fa;
+  --primary-hover: #3b82f6;
+
+  --success: #22c55e;
+  --danger: #ef4444;
+  --danger-hover: #f87171;
+  --warning: #f59e0b;
+  --info: #60a5fa;
+
+  --border-color: #334155;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
+
+  --sidebar-active-bg: #3b82f6;
+  --sidebar-active-text: #ffffff;
+  --sidebar-hover-bg: #1e293b;
+
+  --progress-bg: #334155;
+  --progress-fill: #60a5fa;
+}
+
+/* ─── PURPLE THEME ─── */
+:root[data-theme="purple"] {
+  --bg-primary: #ffffff;
+  --bg-secondary: #faf5ff;
+  --bg-sidebar: #2e1065;
+  --bg-navbar: #ffffff;
+
+  --text-primary: #1e1b4b;
+  --text-secondary: #6b7280;
+  --text-inverse: #ffffff;
+  --text-sidebar: #ddd6fe;
+
+  --primary: #7c3aed;
+  --primary-hover: #6d28d9;
+
+  --success: #22c55e;
+  --danger: #ef4444;
+  --danger-hover: #dc2626;
+  --warning: #f59e0b;
+  --info: #7c3aed;
+
+  --border-color: #e9d5ff;
+  --shadow-sm: 0 1px 3px rgba(124, 58, 237, 0.1);
+  --shadow-md: 0 4px 6px rgba(124, 58, 237, 0.15);
+
+  --sidebar-active-bg: #7c3aed;
+  --sidebar-active-text: #ffffff;
+  --sidebar-hover-bg: #3b0764;
+
+  --progress-bg: #ede9fe;
+  --progress-fill: #7c3aed;
+}
+
+/* ─── Expose variables to Tailwind as classes ─── */
+@theme inline {
+  --color-app: var(--bg-secondary);
+  --color-surface: var(--bg-primary);
+  --color-navbar: var(--bg-navbar);
+  --color-sidebar: var(--bg-sidebar);
+  --color-sidebar-hover: var(--sidebar-hover-bg);
+  --color-sidebar-active: var(--sidebar-active-bg);
+
+  --color-main: var(--text-primary);
+  --color-muted: var(--text-secondary);
+  --color-inverse: var(--text-inverse);
+  --color-sidebar-text: var(--text-sidebar);
+
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-success: var(--success);
+  --color-danger: var(--danger);
+  --color-danger-hover: var(--danger-hover);
+  --color-warning: var(--warning);
+  --color-info: var(--info);
+
+  --color-line: var(--border-color);
+  --color-progress-bg: var(--progress-bg);
+  --color-progress-fill: var(--progress-fill);
+
+  --shadow-sm: var(--shadow-sm);
+  --shadow-md: var(--shadow-md);
+}
+
+body {
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+}
