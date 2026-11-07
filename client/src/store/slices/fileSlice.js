@@ -13,7 +13,7 @@ const initialState = {
 };
 
 const fileSlice = createSlice({
-  name: "file",
+  name: "files",
   initialState,
   reducers: {
     setFiles: (state, action) => {
@@ -29,9 +29,31 @@ const fileSlice = createSlice({
       state.files = null;
       state.isLoading = false;
     },
+
+    addFile: (state, action) => {
+      state.files.unshift(action.payload);
+    },
+
+    removeFile: (state, action) => {
+      state.files = state.files.filter((file) => file._id !== action.payload);
+    },
+
+    setUploadProgress: (state, action) => {
+      state.uploadProgress = action.payload;
+    },
+
+    setUploading: (state, action) => {
+      state.uploading = action.payload;
+    },
   },
 });
 
-export const { setFiles, setFileLoading, logout } = fileSlice.actions;
+export const {
+  setFiles,
+  addFile,
+  removeFile,
+  setUploadProgress,
+  setUploading,
+} = fileSlice.actions;
 
 export default fileSlice.reducer;
