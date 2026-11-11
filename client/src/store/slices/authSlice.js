@@ -5,6 +5,7 @@ const initialState = {
   accessToken: null, // ← add this
   isAuthenticated: false,
   isLoading: false,
+  isAuthChecking: true, // true at start, until the first refresh finishes
   error: null, //← login error message
 };
 
@@ -38,6 +39,10 @@ const authSlice = createSlice({
       state.isLoading = false;
       state.error = null;
     },
+
+    setAuthChecking: (state, action) => {
+      state.isAuthChecking = action.payload;
+    },
   },
 });
 
@@ -47,6 +52,7 @@ export const {
   logout,
   setAuthError,
   clearAuthError,
+  setAuthChecking,
 } = authSlice.actions;
 
 export default authSlice.reducer;

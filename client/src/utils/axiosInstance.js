@@ -28,15 +28,20 @@ axiosInstance.interceptors.request.use(
 // ---------- Response: refresh on 401 ----------
 let refreshPromise = null; // shared, so only ONE refresh runs at a time
 
-const refreshAccessToken = async () => {
-  // plain axios (not axiosInstance) so interceptors don't loop
-  const res = await axios.post(`${BASE_URL}/auth/refresh`, null, {
-    withCredentials: true,
-  });
-  const accessToken = res.data.data.accessToken;
-  const user = store.getState().auth.user;
-  store.dispatch(setCredentials({ user, accessToken }));
-  return accessToken;
+export const refreshSession = () => {
+  if (!refreshPromise) {
+    refreshPromise = axios
+      .post(`${BASE_URL}/auth/refresh`, null, { withCredentials: true })
+      .then((res) => {
+        const { accessToken, user } = res.data.data;
+        store.dispatch(setCredentials({ user, accessToken }));
+        return accessToken;
+      })
+      .finally(() => {
+        refreshPromise = null;
+      });
+  }
+  return refreshPromise;
 };
 
 axiosInstance.interceptors.response.use(
@@ -60,15 +65,9 @@ axiosInstance.interceptors.response.use(
       originalRequest._retry = true; // mark: second failure will not refresh again
 
       try {
-        if (!refreshPromise) {
-          refreshPromise = refreshAccessToken().finally(() => {
-            refreshPromise = null;
-          });
-        }
-        const newToken = await refreshPromise;
-
+        const newToken = await refreshSession();
         originalRequest.headers.Authorization = `Bearer ${newToken}`;
-        return axiosInstance(originalRequest); // retry once
+        return axiosInstance(originalRequest);
       } catch (refreshError) {
         store.dispatch(logout()); // refresh failed: session is dead
         return Promise.reject(refreshError);
