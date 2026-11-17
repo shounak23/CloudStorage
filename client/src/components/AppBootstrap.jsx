@@ -10,7 +10,7 @@ const AppBootstrap = () => {
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
   }, [theme]);
-  
+
   const dispatch = useDispatch();
   const { isAuthChecking } = useSelector((state) => state.auth);
 

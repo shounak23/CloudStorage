@@ -28,10 +28,10 @@
 }
 
 .sidebar-logo {
-  font-size: 18px;
-  font-weight: 700;
-  color: var(--text-inverse);
-  padding: 8px 12px 20px;
+  background: linear-gradient(90deg, var(--primary), var(--text-inverse));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 .sidebar-nav {

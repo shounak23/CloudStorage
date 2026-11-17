@@ -17,7 +17,7 @@ const Sidebar = ({ open, onClose }) => {
       {open && <div className="sidebar-overlay" onClick={onClose} />}
 
       <aside className={`sidebar ${open ? "sidebar-open" : ""}`}>
-        <div className="sidebar-logo">☁️ CloudStorage</div>
+        <div className="sidebar-logo">☁️ Cloud Storage</div>
 
         <nav className="sidebar-nav">
           {links.map((link) => (
