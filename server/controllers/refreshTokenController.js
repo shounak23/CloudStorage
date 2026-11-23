@@ -5,6 +5,7 @@ import { ApiError } from "../utils/apiError.js";
 import { generateRefreshToken } from "../utils/generateRefreshToken.js";
 import { generateAccessToken } from "../utils/generateAccessToken.js";
 import { ApiResponse } from "../utils/apiResponse.js";
+import { User } from "../models/user.model.js";
 
 export const refreshTokenController = async (req, res, next) => {
   try {
@@ -27,17 +28,21 @@ export const refreshTokenController = async (req, res, next) => {
       throw new ApiError(401, "Unauthorized - No session found");
     }
 
+    const userDetails = await User.findById(decoded.userId).select("-password");
+    if (!userDetails) throw new ApiError(401, "User not found");
+
     // regenerate access token
     const newAccessToken = generateAccessToken(
-      decoded.userId,
-      decoded.email,
-      decoded.role,
+      userDetails._id,
+      userDetails.email,
+      userDetails.role,
     );
     // reGenerate JWT token - refresh
     const newRefreshToken = generateRefreshToken(decoded.userId);
     // update session with new refresh token
     await Session.updateOne(
-      { userId: decoded.userId, isValid: true },
+      { userId: decoded.userId, isValid: true }, // for single device login
+      // { userId: session._id, isValid: true }, // for multi device login
       {
         refreshToken: newRefreshToken,
         lastActive: Date.now(),
@@ -55,9 +60,21 @@ export const refreshTokenController = async (req, res, next) => {
     return res.status(200).json(
       new ApiResponse(200, "Token refreshed", {
         accessToken: newAccessToken,
+        user: {
+          id: userDetails._id,
+          email: userDetails.email,
+          username: userDetails.username,
+          role: userDetails.role,
+        },
       }),
     );
   } catch (error) {
+    if (
+      error.name === "TokenExpiredError" ||
+      error.name === "JsonWebTokenError"
+    ) {
+      return next(new ApiError(401, "Unauthorized - Invalid refresh token"));
+    }
     next(error);
   }
 };

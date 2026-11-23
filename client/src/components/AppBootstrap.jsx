@@ -13,6 +13,7 @@ const AppBootstrap = () => {
 
   const dispatch = useDispatch();
   const { isAuthChecking } = useSelector((state) => state.auth);
+  // console.log("isAuthChecking", isAuthChecking);
 
   useEffect(() => {
     refreshSession()

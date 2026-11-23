@@ -5,8 +5,10 @@ import axiosInstance from "../utils/axiosInstance";
 import { setCredentials } from "../store/slices/authSlice";
 
 const getErrorMessage = (err) => {
-  if (err.code === "ECONNABORTED") return "The server took too long to respond. Please try again.";
-  if (!err.response) return "Cannot reach the server. Check your internet connection.";
+  if (err.code === "ECONNABORTED")
+    return "The server took too long to respond. Please try again.";
+  if (!err.response)
+    return "Cannot reach the server. Check your internet connection.";
   const { status, data } = err.response;
   if (status === 401) return "Invalid email or password.";
   if (status === 429) return "Too many attempts. Please try again later.";
@@ -43,12 +45,21 @@ const LogInPage = () => {
     setLoading(true);
     setError("");
     try {
-      const res = await axiosInstance.post("/auth/login", form, { timeout: 15000 });
+      const res = await axiosInstance.post("/auth/login", form, {
+        timeout: 15000,
+      });
       const { accessToken, id, username, email } = res.data.data;
       // PublicRoute sees isAuthenticated and redirects to /dashboard
-      dispatch(setCredentials({ user: { id, username, email }, accessToken }));
+      dispatch(
+        setCredentials({
+          user: { id, username, email },
+          accessToken,
+        }),
+      );
     } catch (err) {
       setError(getErrorMessage(err));
+      setLoading(false);
+    } finally {
       setLoading(false);
     }
   };
@@ -70,7 +81,9 @@ const LogInPage = () => {
           )}
 
           <div className="field">
-            <label htmlFor="email" className="field-label">Email</label>
+            <label htmlFor="email" className="field-label">
+              Email
+            </label>
             <input
               id="email"
               name="email"
@@ -87,7 +100,9 @@ const LogInPage = () => {
           </div>
 
           <div className="field">
-            <label htmlFor="password" className="field-label">Password</label>
+            <label htmlFor="password" className="field-label">
+              Password
+            </label>
             <div className="field-password">
               <input
                 id="password"
@@ -123,14 +138,17 @@ const LogInPage = () => {
 
           {slow && (
             <p className="auth-slow">
-              Taking longer than usual. Your connection may be slow, please wait...
+              Taking longer than usual. Your connection may be slow, please
+              wait...
             </p>
           )}
         </form>
 
         <div className="auth-footer">
           New to Cloud Storage?{" "}
-          <Link to="/register" className="auth-link">Create a free account</Link>
+          <Link to="/register" className="auth-link">
+            Create a free account
+          </Link>
         </div>
       </div>
     </div>

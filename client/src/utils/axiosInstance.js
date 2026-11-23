@@ -29,17 +29,17 @@ axiosInstance.interceptors.request.use(
 let refreshPromise = null; // shared, so only ONE refresh runs at a time
 
 export const refreshSession = () => {
-  if (true) {
-    const accessToken = "mock-token";
-    const user = {
-      id: "1",
-      username: "Shounak",
-      email: "a@gmail.com",
-      role: "user",
-    };
-    store.dispatch(setCredentials({ user, accessToken }));
-    return Promise.resolve(accessToken);
-  }
+  // if (true) {
+  //   const accessToken = "mock-token";
+  //   const user = {
+  //     id: "1",
+  //     username: "Shounak",
+  //     email: "a@gmail.com",
+  //     role: "user",
+  //   };
+  //   store.dispatch(setCredentials({ user, accessToken }));
+  //   return Promise.resolve(accessToken);
+  // }
   if (!refreshPromise) {
     refreshPromise = axios
       .post(`${BASE_URL}/auth/refresh`, null, { withCredentials: true })

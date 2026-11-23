@@ -1,0 +1,95 @@
+# Project: CloudStorage (full stack, learning project)
+
+## About me
+Beginner-intermediate developer. I prefer concepts explained first;
+give code ONLY when I ask for code. Keep answers short and simple.
+
+## Environment
+Node 22 LTS, npm 10, Windows. Monorepo: /server (Node) and /client (React).
+
+## Backend (Node + Express, ES modules)
+Stack: express, mongoose (MongoDB Atlas), jsonwebtoken, bcrypt,
+cookie-parser, cors, multer (memory storage), cloudinary, zod.
+(Planned/not built: rate limiting, forgot password, docker, redis.)
+
+Structure: config/ (cloudinary, jwtConfig, multer), controllers/, middleware/
+(authMiddleware, validate), models/ (user, session, activityLog, file),
+routes/, utils/ (ApiError, ApiResponse, generateAccessToken,
+generateRefreshToken, logActivity), validators/, app.js, index.js.
+
+Auth design:
+- Access token: JWT 1h, secret ACCESS_TOKEN_SECRET, payload {userId,email,role},
+  sent as "Authorization: Bearer <token>", kept in Redux memory.
+- Refresh token: JWT 7d, secret REFRESH_TOKEN_SECRET, payload {userId} only,
+  stored in HttpOnly cookie; rotated on every /auth/refresh.
+- Session model per device: userId, refreshToken, ip, userAgent, isValid,
+  lastActive, expiresAt (TTL index auto-deletes). authMiddleware verifies the
+  access token, loads the user, and checks a session with matching refreshToken.
+- MULTIDEVICE_LOGIN env flag (1 = allow multiple devices).
+- Logout deletes only the current device's session and clears the cookie.
+- ActivityLog model logs login/logout/failed_login.
+- Response format: ApiResponse(statusCode, message, data); errors thrown as
+  ApiError and handled by a global error handler.
+
+Routes:
+POST /api/auth/register | login | logout | refresh
+GET  /api/files (cursor pagination, search, type filter, sort)
+POST /api/files/upload (multer + cloudinary) | DELETE /api/files/:id
+
+Known fixes: zod v4 uses result.error.issues; multer v1 syntax;
+refresh controller must return { accessToken, user }.
+
+## Frontend (React 18 + Vite 5, JS not TS)
+Styling: Tailwind v4 (@tailwindcss/vite) + my own CSS files with CSS variables
+for 3 themes (light/dark/purple) via <html data-theme="...">.
+Files: styles/variables.css (theme vars + @theme inline), layout.css,
+components/{button,navbar,sidebar,dropdown,progress,badge,auth}.css.
+Using native CSS classes (not shadcn).
+
+Structure: components/{layout (MainLayout, Sidebar, Navbar), AppBootstrap},
+pages/{LogInPage, RegisterPage, DashboardPage, FilesPage, UploadPage,
+ProfilePage}, routes/{AppRouter, ProtectedRoute, PublicRoute},
+store/{store.js, slices/authSlice, themeSlice}, utils/axiosInstance.js.
+
+Key frontend design:
+- Redux: authSlice {user, accessToken, isAuthenticated, isAuthChecking},
+  themeSlice {theme} (state key "themes").
+- axiosInstance: baseURL http://localhost:8000/api, withCredentials, request
+  interceptor adds Bearer token from the store, response interceptor on 401
+  refreshes once (_retry flag, shared refreshPromise via exported
+  refreshSession()), 403 not refreshed, logout on failed refresh.
+- AppBootstrap: on app start calls refreshSession() once, shows a spinner
+  while isAuthChecking, then renders AppRouter.
+- Routing: PublicRoute (redirect to /dashboard if logged in), ProtectedRoute
+  (redirect to /login), MainLayout with <Outlet/>.
+- LogInPage and RegisterPage done (loading, slow-network message, timeout,
+  error messages). Navbar has theme select, avatar dropdown, logout.
+- Plan: TanStack Query for server data (files, stats) instead of a file slice;
+  reset other slices on logout.
+
+## Current status
+Backend finished. Frontend: routes, theme, axios, auth pages, layout done.
+Next: FilesPage, UploadPage, DashboardPage, ProfilePage.
+Open issue: after login the redirect to /dashboard and setLoading(false)
+needed checking.
+
+
+server
+PORT=8000
+CORS_ORIGIN = *
+MONGODB_URI=mongodb+srv://shounakroychowdhury22000_db_user:1KyyQT0DkmjlfnRd@cluster0.5qurkbd.mongodb.net
+ACCESS_TOKEN_SECRET = 331ca69b43d9fd77b54a4be416d1a71f5069dec12430af8b1f48009fd3c89b7a
+ACCESS_TOKEN_EXPIRY = 1h
+REFRESH_TOKEN_SECRET = rhhgryg885y85y8yghwgug2oorvhxcyfwfewfr7tre8yrnbsugwxnuex4886_g
+REFRESH_TOKEN_EXPIRY = 1d
+NODE_ENV = development
+SESSION_SECRET = Monidipa&shounak@2026%^&*
+MULTIDEVICE_LOGIN = 0
+CLOUDINARY_API_SECRET = GLQUunBrP70vwOiBRfl3qCgoeAY
+CLOUDINARY_API_KEY = 862818156851815
+CLOUDINARY_NAME = dzauip1qt
+FILES_PER_PAGE = 10
+FILES_SIZE_CLOUD_MB = 5
+JWT_SECERT = 794811a4359794b2f6e63e9434e69336b81d8289508bf5defb72626b623ace30
+
+client
